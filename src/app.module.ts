@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PersistenceModule } from './persistence/persistence.module';
 import { ConfigModule } from '@nestjs/config';
-import db_config from './persistence/db_config';
+import db_config from './persistence/db-config';
 
 @Module({
   imports: [

@@ -1,2 +1,2 @@
-export * from './db_config';
+export * from './db-config';
 export * from './persistence.module'
