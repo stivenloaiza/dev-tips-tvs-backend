@@ -22,4 +22,14 @@ export class QrCodeService {
     await newQrCode.save();
     return qrCodeDataUrl;
   }
+
+  async verifyQrCode(code: string): Promise<boolean> {
+    const qrCode = await this.qrCodeModel.findOne({ code: code }).exec();
+    if (qrCode) {
+      qrCode.isAuthenticated = true;
+      await qrCode.save();
+      return true;
+    }
+    return false;
+  }
 }
