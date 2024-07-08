@@ -11,7 +11,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
   .setTitle('TV´s Tips')
-  .setDescription('The "Programming Tips" project is a solution that allows companies to display brief and concise programming tips in various languages and experience levels on television screens. Each tip includes a QR code that redirects users to an external webpage with more detailed information. This API allows companies to retrieve programming tips based on the desired language and experience level and display them on television screens within their facilities. Users can scan the QR code to access more detailed information on an external webpage.    Daniel Lopez, Manuela Giraldo, Samuel Vera, Alexander Hernandez' )
+  .setDescription('The "Programming Tips" project is a solution that allows companies to display brief and concise programming tips in various languages and experience levels on television screens. Each QR contains user authentication to show information based on their subscription. This API allows companies to retrieve programming tips based on the desired language and experience level and display them on television screens within their facilities. The QR code accesses more detailed information on an external webpage. Daniel Lopez, Manuela Giraldo, Samuel Vera, Alexander Hernandez.' )
   .setVersion('1.0')
   .addTag('TV´s tips')
   .build();
