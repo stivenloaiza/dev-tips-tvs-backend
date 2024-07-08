@@ -1,7 +1,8 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
 @Schema()
-export class QrCode {
+export class QrCode extends Document {
   @Prop({ required: true })
   code: string;
 
@@ -14,3 +15,5 @@ export class QrCode {
   @Prop({ required: true })
   createdAt: Date;
 }
+
+export const QRCodeSchema = SchemaFactory.createForClass(QrCode);
