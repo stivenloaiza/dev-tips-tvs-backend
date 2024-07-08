@@ -7,8 +7,7 @@ export class QrCodeController {
 
   @Get('generate-qr')
   async generateQr() {
-    const qrCodeDataUrl = await this.qrCodeService.generateQrCode();
-    return { qrCodeDataUrl };
+    return await this.qrCodeService.generateQrCode();
   }
 
   @Get('verify-qr')

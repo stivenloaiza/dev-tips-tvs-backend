@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import * as QrCodeLib from 'qrcode';
 import { v4 as uuidv4 } from 'uuid';
 import { InjectModel } from '@nestjs/mongoose';
 import { QrCode } from '../entities/qr-code.entity';
@@ -9,18 +8,19 @@ import { Model } from 'mongoose';
 export class QrCodeService {
   constructor(@InjectModel(QrCode.name) private qrCodeModel: Model<QrCode>) {}
 
-  async generateQrCode(): Promise<string> {
-    const uniqueId = uuidv4();
-    const url = `http://localhost:3000/qr-code/${uniqueId}`;
-    const qrCodeDataUrl = await QrCodeLib.toDataURL(url);
+  async generateQrCode(): Promise<{ code: string; url: string }> {
+    const code = uuidv4();
+    const url = `http://localhost:3000/qr-code/${code}`;
+    const createdAt = new Date();
 
-    const newQrCode = new this.qrCodeModel({
-      code: uniqueId,
+    const qrCode = new this.qrCodeModel({
+      code: code,
       url: url,
-      createdAt: new Date(),
+      isAuthenticated: false,
+      createdAt: createdAt,
     });
-    await newQrCode.save();
-    return qrCodeDataUrl;
+    await qrCode.save();
+    return { code, url };
   }
 
   async verifyQrCode(code: string): Promise<boolean> {
