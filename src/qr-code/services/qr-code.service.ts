@@ -32,4 +32,9 @@ export class QrCodeService {
     }
     return false;
   }
+
+  async checkAuthentication(code: string): Promise<boolean> {
+    const qrCode = await this.qrCodeModel.findOne({ code: code }).exec();
+    return qrCode ? qrCode.isAuthenticated : false;
+  }
 }
