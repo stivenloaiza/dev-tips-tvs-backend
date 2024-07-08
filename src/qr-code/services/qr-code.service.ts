@@ -12,7 +12,7 @@ export class QrCodeService {
   async generateQrCode(): Promise<string> {
     const uniqueId = uuidv4();
     const url = `http://localhost:3000/qr-code/${uniqueId}`;
-    const qrCodeDataUrl = await QrCodeLib.toDataUrl(url);
+    const qrCodeDataUrl = await QrCodeLib.toDataURL(url);
 
     const newQrCode = new this.qrCodeModel({
       code: uniqueId,
