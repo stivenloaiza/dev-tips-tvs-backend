@@ -13,7 +13,6 @@ import db_config from './persistence/db-config';
     }),
 
     PersistenceModule,
-
     ApikeyModule
   ],
   controllers: [],

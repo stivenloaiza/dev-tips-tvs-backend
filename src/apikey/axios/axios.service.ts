@@ -1,4 +1,3 @@
-// src/axios/axios.service.ts
 import {  HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
@@ -12,5 +11,4 @@ export class AxiosService {
     return response.data;
   }
 
-  // Puedes agregar métodos para POST, PUT, DELETE, etc.
 }
