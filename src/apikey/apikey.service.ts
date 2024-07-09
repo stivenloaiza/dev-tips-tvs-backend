@@ -6,8 +6,8 @@ export class ApiKeyAuthService {
   constructor(private readonly axiosService: AxiosService) {}
 
   async validateApiKey(apiKey: string): Promise<any> {
-    const suscription = await this.axiosService.get(`http://microservice-suscriptions/suscriptions?apiKey=${apiKey}`);
-    return suscription;
+    const user = await this.axiosService.get(`http://microservice-users/users?apiKey=${apiKey}`);
+    return user;
   }
 }
 

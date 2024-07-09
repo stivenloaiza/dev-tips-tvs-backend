@@ -7,7 +7,8 @@ export class ApiKeyAuthController {
 
   @Get('validate')
   async validateApiKey(@Query('apiKey') apiKey: string) {
-    const suscription = await this.apiKeyAuthService.validateApiKey(apiKey);
-    return suscription;
+    const user = await this.apiKeyAuthService.validateApiKey(apiKey);
+    return user;
   }
-}
+
+};
