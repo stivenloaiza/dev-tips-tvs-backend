@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PersistenceModule } from './persistence/persistence.module';
 import { ConfigModule } from '@nestjs/config';
+import { ApikeyModule } from './apikey/apikey.module';
 import db_config from './persistence/db-config';
 
 @Module({
@@ -11,7 +12,9 @@ import db_config from './persistence/db-config';
       isGlobal: true,
     }),
 
-    PersistenceModule
+    PersistenceModule,
+
+    ApikeyModule
   ],
   controllers: [],
   providers: [],
