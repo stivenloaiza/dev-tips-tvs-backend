@@ -10,5 +10,4 @@ export class ApiKeyAuthController {
     const user = await this.apiKeyAuthService.validateApiKey(apiKey);
     return user;
   }
-
-};
+}

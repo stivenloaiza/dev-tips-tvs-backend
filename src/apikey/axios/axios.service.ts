@@ -1,4 +1,4 @@
-import {  HttpService } from '@nestjs/axios';
+import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 
@@ -10,5 +10,4 @@ export class AxiosService {
     const response = await firstValueFrom(this.httpService.get(url, config));
     return response.data;
   }
-
 }

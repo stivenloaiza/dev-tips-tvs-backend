@@ -8,5 +8,3 @@ import { AxiosService } from './axios.service';
   exports: [AxiosService],
 })
 export class AxiosModule {}
-
-

@@ -8,12 +8,12 @@ import db_config from './persistence/db-config';
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
-      load:[db_config],
+      load: [db_config],
       isGlobal: true,
     }),
 
     PersistenceModule,
-    ApikeyModule
+    ApikeyModule,
   ],
   controllers: [],
   providers: [],
