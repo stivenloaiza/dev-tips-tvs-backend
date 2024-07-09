@@ -17,7 +17,13 @@ export class UserSuscriptionService {
       managerName: 'Jane Doe',
       managerEmail: 'jane.doe@example.com',
       managerPhone: '+1122334455',
-      subscriptions: ['TvMedia'],
+      subscriptions: [
+        {
+          seniority: "Junior",
+          tecnology: "Java"
+        }
+
+      ],
     },
     {
       apiKey: 'xyz7890abcde2',
@@ -28,18 +34,24 @@ export class UserSuscriptionService {
       managerName: 'Jane Doe',
       managerEmail: 'jane.doe@example.com',
       managerPhone: '+1122334455',
-      subscriptions: ['TvMedia'],
+      subscriptions: [
+        {
+          seniority: "Junior",
+          tecnology: "Java"
+        }
+
+      ],
     },
   ];
 
-  getUserSubscriptions(email: string): string[] | null {
+  getUserSubscriptions(email: string) {
     const user = this.users.find(u => u.email === email);
     return user ? user.subscriptions : null;
   }
 
-  getUserInfo(email: string):string []{
+  getUserInfo(email: string) {
     const user = this.users.find(u => u.email === email);
-    return user? [user.name, user.phone, user.role, user.managerName, user.managerEmail, user.managerPhone] : null;
+    return user;
   }
 }
 
