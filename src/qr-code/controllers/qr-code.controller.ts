@@ -36,4 +36,9 @@ export class QrCodeController {
     const isAuthenticated = await this.qrCodeService.checkAuthentication(code);
     return { authenticated: isAuthenticated };
   }
+
+  @Get('user-exists')
+  async userExists(@Query('email') email: string) {
+    return this.qrCodeService.userExists(email);
+  }
 }
