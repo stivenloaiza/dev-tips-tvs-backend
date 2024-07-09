@@ -37,6 +37,14 @@ export class QrCodeController {
     return { authenticated: isAuthenticated };
   }
 
+  @ApiOperation({ summary: 'Validate if user exists by email' })
+  @ApiQuery({
+    name: 'email',
+    required: true,
+    description: 'Email to validate',
+    type: String,
+    example: 'bob@example.com',
+  })
   @Get('user-exists')
   async userExists(@Query('email') email: string) {
     return this.qrCodeService.userExists(email);
