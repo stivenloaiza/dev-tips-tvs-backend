@@ -5,6 +5,7 @@ import { QrCode } from '../entities/qr-code.entity';
 import { Model } from 'mongoose';
 import { VerificationCode } from '../entities/verification-codes.entity';
 import * as crypto from 'crypto';
+import { VerificationCodeGenerated } from '../interfaces/verification-code.interface';
 
 @Injectable()
 export class QrCodeService {
@@ -73,7 +74,9 @@ export class QrCodeService {
     return users.some((user) => user.email === email);
   }
 
-  async generateVerificationCode(email: string): Promise<Object> {
+  async generateVerificationCode(
+    email: string,
+  ): Promise<VerificationCodeGenerated> {
     if (await this.userExists(email)) {
       const code = crypto.randomBytes(3).toString('hex');
       const codeGenerated = {
