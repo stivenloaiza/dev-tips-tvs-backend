@@ -1,4 +1,4 @@
-import { Controller, Get, NotFoundException, Query } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ApiKeyAuthService } from './apikey.service';
 
 @Controller('auth')
@@ -7,8 +7,6 @@ export class ApiKeyAuthController {
 
   @Get('validate')
   async validateApiKey(@Query('apiKey') apiKey: string) {
-    return  this.apiKeyAuthService.validateApiKey(apiKey);
+    return this.apiKeyAuthService.validateApiKey(apiKey);
   }
 }
-
-

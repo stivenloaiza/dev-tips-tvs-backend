@@ -6,11 +6,7 @@ import { MockModule } from './mock/mock.module';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [
-    AxiosModule,
-    MockModule,
-    HttpModule
-    ],
+  imports: [AxiosModule, MockModule, HttpModule],
   controllers: [ApiKeyAuthController],
   providers: [ApiKeyAuthService],
 })

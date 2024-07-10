@@ -40,13 +40,16 @@ export class MockService {
       },
     ];
 
-    const user = mockUsers.find(user => user.subscriptions.some(sub => sub.apiKey === apiKey));
+    const user = mockUsers.find((user) =>
+      user.subscriptions.some((sub) => sub.apiKey === apiKey),
+    );
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
-    const subscription = user.subscriptions.find(sub => sub.apiKey === apiKey);
+    const subscription = user.subscriptions.find(
+      (sub) => sub.apiKey === apiKey,
+    );
     return subscription;
   }
 }
-
