@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PersistenceModule } from './persistence/persistence.module';
 import { ConfigModule } from '@nestjs/config';
+import { ApikeyModule } from './apikey/apikey.module';
 import { QrCodeModule } from './qr-code/qr-code.module';
 import db_config from './persistence/db-config';
 import { HttpModule } from '@nestjs/axios';
@@ -20,6 +21,7 @@ import { UserSuscriptionService } from './user-suscription/user-suscription.serv
     PersistenceModule,
     UserSuscriptionModule,
     QrCodeModule,
+    ApikeyModule,
   ],
   controllers: [UserSubscriptionsController],
   providers: [UserSuscriptionService],
