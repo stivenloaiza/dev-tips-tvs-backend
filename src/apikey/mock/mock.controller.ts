@@ -8,7 +8,7 @@ export class MockController {
   @Get('sub')
   async getSuscriptionByApiKey(@Query('apiKey') apiKey: string) {
     try {
-      const subscription = await this.mockService.getUserByApiKey(apiKey);
+      const subscription = await this.mockService.getSubByApiKey(apiKey);
       if (!subscription) {
         throw new NotFoundException(
           `Subscription not found for apiKey: ${apiKey}`,

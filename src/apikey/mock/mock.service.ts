@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class MockService {
-  async getUserByApiKey(apiKey: string): Promise<any> {
+  async getSubByApiKey(apiKey: string): Promise<any> {
     const mockUsers = [
       {
         id: '2',
@@ -47,9 +47,9 @@ export class MockService {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
-    const subscription = user.subscriptions.find(
-      (sub) => sub.apiKey === apiKey,
-    );
-    return subscription;
+    //const subscription = user.subscriptions.find(
+     // (sub) => sub.apiKey === apiKey,
+   // );
+    return user;
   }
 }

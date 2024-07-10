@@ -5,7 +5,7 @@ import { ApiKeyAuthService } from './apikey.service';
 export class ApiKeyAuthController {
   constructor(private readonly apiKeyAuthService: ApiKeyAuthService) {}
 
-  @Get('validate')
+  @Get('validate-apikey')
   async validateApiKey(@Query('apiKey') apiKey: string) {
     return this.apiKeyAuthService.validateApiKey(apiKey);
   }
