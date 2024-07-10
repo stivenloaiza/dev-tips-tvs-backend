@@ -1,12 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { InjectModel } from '@nestjs/mongoose';
 import { QrCode } from '../entities/qr-code.entity';
 import { Model } from 'mongoose';
+import { VerificationCode } from '../entities/verification-codes.entity';
+import * as crypto from 'crypto';
+import { VerificationCodeGenerated } from '../interfaces/verification-code.interface';
 
 @Injectable()
 export class QrCodeService {
-  constructor(@InjectModel(QrCode.name) private qrCodeModel: Model<QrCode>) {}
+  constructor(
+    @InjectModel(QrCode.name) private qrCodeModel: Model<QrCode>,
+    @InjectModel(VerificationCode.name)
+    private verificationCode: Model<VerificationCode>,
+  ) {}
 
   async generateQrCode(): Promise<{ code: string; url: string }> {
     const code = uuidv4();
@@ -65,5 +72,25 @@ export class QrCodeService {
       },
     ];
     return users.some((user) => user.email === email);
+  }
+
+  async generateVerificationCode(
+    email: string,
+  ): Promise<VerificationCodeGenerated> {
+    if (await this.userExists(email)) {
+      const code = crypto.randomBytes(3).toString('hex');
+      const codeGenerated = {
+        email: email,
+        used: false,
+        code: code,
+        createdAt: new Date(),
+        expiredAt: new Date(new Date().getTime() + 15 * 60000),
+      };
+      const verificationCode = new this.verificationCode(codeGenerated);
+      await verificationCode.save();
+      return codeGenerated;
+    } else {
+      throw new NotFoundException('User not found');
+    }
   }
 }
