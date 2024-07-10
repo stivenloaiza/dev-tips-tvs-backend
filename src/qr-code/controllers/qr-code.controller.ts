@@ -49,4 +49,9 @@ export class QrCodeController {
   async userExists(@Query('email') email: string) {
     return this.qrCodeService.userExists(email);
   }
+
+  @Get('generate-code/:email')
+  async generateVerificationCode(@Param('email') email: string) {
+    return await this.qrCodeService.generateVerificationCode(email);
+  }
 }
