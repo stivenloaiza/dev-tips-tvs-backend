@@ -93,4 +93,21 @@ export class QrCodeService {
       throw new NotFoundException('User not found');
     }
   }
+
+  async verifyVerificationCode(code: string): Promise<boolean> {
+    const findCode = await this.verificationCode.findOne({ code: code }).exec();
+    if (!findCode) {
+      throw new NotFoundException('Code not found');
+    }
+
+    if (findCode.used === true) {
+      throw new NotFoundException('Code already used');
+    }
+
+    if (findCode.expiredAt < new Date()) {
+      throw new NotFoundException('Code expired');
+    }
+
+    return true;
+  }
 }
