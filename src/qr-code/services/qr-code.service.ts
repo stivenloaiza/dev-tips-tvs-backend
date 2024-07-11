@@ -94,7 +94,7 @@ export class QrCodeService {
     }
   }
 
-  async verifyVerificationCode(code: string): Promise<boolean> {
+  async isValidCode(code: string): Promise<boolean> {
     const findCode = await this.verificationCode.findOne({ code: code }).exec();
     if (!findCode) {
       throw new NotFoundException('Code not found');
