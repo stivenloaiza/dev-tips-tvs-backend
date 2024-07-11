@@ -6,6 +6,7 @@ import { Model } from 'mongoose';
 import { VerificationCode } from '../entities/verification-codes.entity';
 import * as crypto from 'crypto';
 import { VerificationCodeGenerated } from '../interfaces/verification-code.interface';
+import axios from 'axios';
 
 @Injectable()
 export class QrCodeService {
@@ -62,7 +63,7 @@ export class QrCodeService {
       {
         apiKey: 'xyz7890abcde2',
         name: 'Steve Smith',
-        email: 'steve@example.com',
+        email: 'veramirandasamuel6@gmail.com',
         phone: '3524154863',
         role: 'company',
         managerName: 'Jane Doe',
@@ -109,5 +110,21 @@ export class QrCodeService {
     }
 
     return true;
+  }
+
+  async sendEmail(email: string) {
+    const codeFound = await this.generateVerificationCode(email);
+    try {
+      const response = await axios.post(
+        'http://localhost:3002/api/v1/mail/code',
+        {
+          code: codeFound.code,
+          email: email,
+        },
+      );
+      return response.data;
+    } catch (error) {
+      throw new NotFoundException('Error sending email');
+    }
   }
 }
