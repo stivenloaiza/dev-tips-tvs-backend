@@ -143,4 +143,25 @@ export class QrCodeService {
       throw new HttpException(error.message, error.status);
     }
   }
+
+  async getUserSubscriptions(code: string) {
+    const { isCodeMatch, email } = await this.isCodeMatch(code);
+    if (isCodeMatch && email) {
+      try {
+        const response = await axios.get(`USERS_URL/${email}`);
+        const user = response.data;
+        if (!user) {
+          throw new NotFoundException('User not found');
+        }
+        return { subscriptions: user.subscriptions };
+      } catch (error) {
+        throw new HttpException(
+          error.response?.data || 'Error fetching user data',
+          error.response?.status || 500,
+        );
+      }
+    } else {
+      throw new NotFoundException('Invalid code');
+    }
+  }
 }
