@@ -65,4 +65,9 @@ export class QrCodeController {
   async sendVerificationCode(@Body('email') email: string) {
     return await this.qrCodeService.sendEmail(email);
   }
+
+  @Post('code-match')
+  async matchVerificationCode(@Body('code') code: string) {
+    return await this.qrCodeService.isCodeMatch(code.toLowerCase());
+  }
 }
