@@ -12,7 +12,6 @@ export class ApiKeyAuthService {
       );
 
       const {
-        name,
         subscriptions: [{
           technology: [{ name: technologyName }],
           level: [{ name: levelName }]
