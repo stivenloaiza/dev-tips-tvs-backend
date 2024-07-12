@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 
 @Injectable()
 export class MockService {
@@ -16,8 +16,22 @@ export class MockService {
         subscriptions: [
           {
             apiKey: 'xyz7890abcdef',
-            seniority: 'Junior',
-            technology: 'Java',
+            level: [
+              {
+                _id: {
+                  $oid: "66845a35688ba50c93cf8bfb"
+                },
+                name: "Junior",
+              }
+            ],
+            technology: [
+              {
+                _id: {
+                  $oid: "66854d83d09bd33eb9536dfd"
+                },
+                name: "JavaScript"
+              }
+            ],
           },
         ],
       },
@@ -33,8 +47,22 @@ export class MockService {
         subscriptions: [
           {
             apiKey: 'xyz7890abcde2',
-            seniority: 'Junior',
-            technology: 'JavaScript',
+            level: [
+              {
+                _id: {
+                  $oid: "66845a35688ba50c93cf8bfb"
+                },
+                name: "Junior",
+              }
+            ],
+            technology: [
+              {
+                _id: {
+                  $oid: "66854d83d09bd33eb9536dfd"
+                },
+                name: "JavaScript"
+              }
+            ],
           },
         ],
       },
@@ -47,9 +75,6 @@ export class MockService {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
 
-    //const subscription = user.subscriptions.find(
-     // (sub) => sub.apiKey === apiKey,
-   // );
     return user;
   }
 }
