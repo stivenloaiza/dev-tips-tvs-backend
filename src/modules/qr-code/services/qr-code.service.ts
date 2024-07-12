@@ -136,8 +136,9 @@ export class QrCodeService {
           .exec();
         findCode.used = true;
         await findCode.save();
+        return { isCodeMatch: true, email: findCode.email };
       }
-      return { isCodeMatch: true };
+      return { isCodeMatch: false };
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
