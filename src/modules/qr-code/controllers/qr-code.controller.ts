@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { QrCodeService } from '../services/qr-code.service';
 import { ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
-import { VerificationCodeGenerated } from '../interfaces/verification-code.interface';
 
 @Controller('qr-code')
 export class QrCodeController {
