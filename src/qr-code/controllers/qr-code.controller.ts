@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { QrCodeService } from '../services/qr-code.service';
-import { ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { VerificationCodeGenerated } from '../interfaces/verification-code.interface';
 
 @Controller('qr-code')
@@ -56,6 +56,12 @@ export class QrCodeController {
     return await this.qrCodeService.generateVerificationCode(email);
   }
 
+  @ApiOperation({ summary: 'Send email with the verification code' })
+  @ApiBody({})
+  @ApiBody({
+    description: 'Email to send the verification code',
+    type: String,
+  })
   @Post('send-code')
   async sendVerificationCode(@Body('email') email: string) {
     return await this.qrCodeService.sendEmail(email);
