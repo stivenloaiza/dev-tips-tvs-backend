@@ -70,4 +70,9 @@ export class QrCodeController {
   async matchVerificationCode(@Body('code') code: string) {
     return await this.qrCodeService.isCodeMatch(code.toLowerCase());
   }
+
+  @Post('code-subscriptions')
+  async getUserSubscriptionsByCode(@Body('code') code: string) {
+    return await this.qrCodeService.getUserSubscriptions(code.toLowerCase());
+  }
 }
