@@ -19,8 +19,6 @@ export class ApiKeyAuthService {
         }]
       } = user;
 
-      const sub = { "Name": name, "technology": technologyName, "level": levelName };
-
       const tip = await this.axiosService.get(`http://localhost:3000/v1/api/mock-tips/tips?level=${levelName}&technology=${technologyName}`,)
       return { "tip": tip }
     } catch (error) {
