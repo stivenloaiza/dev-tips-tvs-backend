@@ -1,6 +1,12 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { QrCodeService } from '../services/qr-code.service';
-import { ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+} from '@nestjs/swagger';
 
 @Controller('qr-code')
 export class QrCodeController {
@@ -71,6 +77,17 @@ export class QrCodeController {
     return await this.qrCodeService.isCodeMatch(code.toLowerCase());
   }
 
+  @ApiOperation({ summary: 'Get user subscriptions by code' })
+  @ApiBody({
+    description: 'Code to validate and get subscriptions',
+    type: String,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Subscriptions retrieved successfully.',
+  })
+  @ApiResponse({ status: 404, description: 'User not found or invalid code.' })
+  @ApiResponse({ status: 500, description: 'Internal server error.' })
   @Post('code-subscriptions')
   async getUserSubscriptionsByCode(@Body('code') code: string) {
     return await this.qrCodeService.getUserSubscriptions(code.toLowerCase());
