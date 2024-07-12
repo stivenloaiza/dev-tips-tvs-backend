@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { InjectModel } from '@nestjs/mongoose';
 import { QrCode } from '../entities/qr-code.entity';
@@ -62,9 +62,9 @@ export class QrCodeService {
       },
       {
         apiKey: 'xyz7890abcde2',
-        name: 'Steve Smith',
+        name: 'Samuel Vera Miranda',
         email: 'veramirandasamuel6@gmail.com',
-        phone: '3524154863',
+        phone: '3126621145',
         role: 'company',
         managerName: 'Jane Doe',
         managerEmail: 'jane.doe@example.com',
@@ -125,6 +125,21 @@ export class QrCodeService {
       return response.data;
     } catch (error) {
       throw new NotFoundException('Error sending email');
+    }
+  }
+
+  async isCodeMatch(code: string) {
+    try {
+      if (await this.isValidCode(code)) {
+        const findCode = await this.verificationCode
+          .findOne({ code: code })
+          .exec();
+        findCode.used = true;
+        await findCode.save();
+      }
+      return { isCodeMatch: true };
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
     }
   }
 }
