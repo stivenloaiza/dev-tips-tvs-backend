@@ -7,6 +7,7 @@ import {
   ApiQuery,
   ApiResponse,
 } from '@nestjs/swagger';
+import { CodeDto, EmailDto } from '../dtos';
 
 @Controller('qr-code')
 export class QrCodeController {
@@ -68,10 +69,15 @@ export class QrCodeController {
     type: String,
   })
   @Post('send-code')
-  async sendVerificationCode(@Body('email') email: string) {
-    return await this.qrCodeService.sendEmail(email);
+  async sendVerificationCode(@Body() emailDto: EmailDto) {
+    return await this.qrCodeService.sendEmail(emailDto.email);
   }
 
+  @ApiOperation({ summary: 'Match verification code' })
+  @ApiBody({
+    description: 'Code to match',
+    type: String,
+  })
   @Post('code-match')
   async matchVerificationCode(@Body('code') code: string) {
     return await this.qrCodeService.isCodeMatch(code.toLowerCase());
@@ -89,7 +95,9 @@ export class QrCodeController {
   @ApiResponse({ status: 404, description: 'User not found or invalid code.' })
   @ApiResponse({ status: 500, description: 'Internal server error.' })
   @Post('code-subscriptions')
-  async getUserSubscriptionsByCode(@Body('code') code: string) {
-    return await this.qrCodeService.getUserSubscriptions(code.toLowerCase());
+  async getUserSubscriptionsByCode(@Body('code') codeDto: CodeDto) {
+    return await this.qrCodeService.getUserSubscriptions(
+      codeDto.code.toLowerCase(),
+    );
   }
 }
