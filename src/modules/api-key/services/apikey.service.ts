@@ -1,14 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { AxiosService } from 'src/modules/axios/axios.service';
+import { AuthenticationApikeyDto } from '../dtos/dtos-apikey';
 
 @Injectable()
 export class ApiKeyAuthService {
   constructor(private readonly axiosService: AxiosService) {}
 
-  async startByApiKey(apiKey: string): Promise<any> {
+  async startByApiKey(apikeyDtop: string): Promise<any> {
     try {
       const user = await this.axiosService.get(
-        `http://localhost:3000/v1/api/subscriptions/sub?apiKey=${apiKey}`,
+        `http://localhost:3000/v1/api/subscriptions/sub?apiKey=${apikeyDtop}`,
       );
 
       const {
@@ -25,7 +26,7 @@ export class ApiKeyAuthService {
       );
       return { tip: tip };
     } catch (error) {
-      throw new NotFoundException(`Api key ${apiKey} not found`);
+      throw new NotFoundException(`Api key ${apikeyDtop} not found`);
     }
   }
 }
