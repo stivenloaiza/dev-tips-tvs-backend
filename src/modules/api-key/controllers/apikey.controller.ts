@@ -1,6 +1,11 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiKeyAuthService } from '../services/apikey.service';
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { 
+   ApiOperation,
+   ApiParam, 
+   ApiResponse, 
+   ApiTags 
+  } from '@nestjs/swagger';
 
 @ApiTags('Validate')  
 @Controller('auth')
