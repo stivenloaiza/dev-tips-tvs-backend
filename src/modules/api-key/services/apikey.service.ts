@@ -3,7 +3,7 @@ import { AxiosService } from 'src/modules/axios/axios.service';
 
 @Injectable()
 export class ApiKeyAuthService {
-  constructor(private readonly axiosService: AxiosService) { }
+  constructor(private readonly axiosService: AxiosService) {}
 
   async startByApiKey(apiKey: string): Promise<any> {
     try {
@@ -12,14 +12,18 @@ export class ApiKeyAuthService {
       );
 
       const {
-        subscriptions: [{
-          technology: [{ name: technologyName }],
-          level: [{ name: levelName }]
-        }]
+        subscriptions: [
+          {
+            technology: [{ name: technologyName }],
+            level: [{ name: levelName }],
+          },
+        ],
       } = user;
 
-      const tip = await this.axiosService.get(`http://localhost:3000/v1/api/mock-tips/tips?level=${levelName}&technology=${technologyName}`,)
-      return { "tip": tip }
+      const tip = await this.axiosService.get(
+        `http://localhost:3000/v1/api/mock-tips/tips?level=${levelName}&technology=${technologyName}`,
+      );
+      return { tip: tip };
     } catch (error) {
       throw new NotFoundException(`Api key ${apiKey} not found`);
     }

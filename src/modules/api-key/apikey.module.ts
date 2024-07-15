@@ -6,11 +6,7 @@ import { MockModule } from '../../mocks/mock-user/mock.module';
 import { ApiKeyAuthService } from './services/apikey.service';
 
 @Module({
-  imports: [
-    AxiosModule, 
-    MockModule, 
-    HttpModule, 
-  ],
+  imports: [AxiosModule, MockModule, HttpModule],
   controllers: [ApiKeyAuthController],
   providers: [ApiKeyAuthService],
   exports: [ApiKeyAuthService],

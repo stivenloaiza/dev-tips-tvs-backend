@@ -10,7 +10,7 @@ import {
 @ApiTags('Validate')  
 @Controller('auth')
 export class ApiKeyAuthController {
-  constructor(private readonly apiKeyAuthService: ApiKeyAuthService) { }
+  constructor(private readonly apiKeyAuthService: ApiKeyAuthService) {}
 
 
   @ApiParam({
