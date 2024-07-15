@@ -14,15 +14,15 @@ async function bootstrap() {
 
   app.setGlobalPrefix('/v1/api');
 
-  app.useGlobalPipes(new ValidationPipe(
-    {
-       whitelist: true,
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
       forbidNonWhitelisted: true,
-     transformOptions:{
-       enableImplicitConversion: true,
-     }
-   }
-  ));
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
 
   const config = new DocumentBuilder()
     .setTitle('TV´s Tips')
