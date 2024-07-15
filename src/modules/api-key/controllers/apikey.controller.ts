@@ -7,6 +7,12 @@ export class ApiKeyAuthController {
 
   @Get('validate-apikey')
   async validateApiKey(@Query('apiKey') apiKey: string) {
-    return this.apiKeyAuthService.startByApiKey(apiKey);
+    const isValid = await this.apiKeyAuthService.startByApiKey(apiKey);
+    if (isValid) {
+      return { message: 'API Key is valid' };
+    } else {
+      return { message: 'API Key is invalid' };
+    }
   }
 }
+
