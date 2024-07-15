@@ -8,6 +8,7 @@ import {
   ApiResponse,
 } from '@nestjs/swagger';
 import { EmailDto } from '../dtos/email.dto';
+import { CodeDto } from '../dtos/validation-code.dto';
 
 @Controller('qr-code')
 export class QrCodeController {
@@ -95,7 +96,9 @@ export class QrCodeController {
   @ApiResponse({ status: 404, description: 'User not found or invalid code.' })
   @ApiResponse({ status: 500, description: 'Internal server error.' })
   @Post('code-subscriptions')
-  async getUserSubscriptionsByCode(@Body('code') code: string) {
-    return await this.qrCodeService.getUserSubscriptions(code.toLowerCase());
+  async getUserSubscriptionsByCode(@Body('code') CodeDto: CodeDto) {
+    return await this.qrCodeService.getUserSubscriptions(
+      CodeDto.code.toLowerCase(),
+    );
   }
 }
