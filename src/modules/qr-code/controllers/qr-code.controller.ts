@@ -7,8 +7,7 @@ import {
   ApiQuery,
   ApiResponse,
 } from '@nestjs/swagger';
-import { EmailDto } from '../dtos/email.dto';
-import { CodeDto } from '../dtos/validation-code.dto';
+import { CodeDto, EmailDto } from '../dtos';
 
 @Controller('qr-code')
 export class QrCodeController {
