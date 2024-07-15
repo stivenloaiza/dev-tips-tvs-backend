@@ -95,9 +95,9 @@ export class QrCodeController {
   @ApiResponse({ status: 404, description: 'User not found or invalid code.' })
   @ApiResponse({ status: 500, description: 'Internal server error.' })
   @Post('code-subscriptions')
-  async getUserSubscriptionsByCode(@Body('code') CodeDto: CodeDto) {
+  async getUserSubscriptionsByCode(@Body('code') codeDto: CodeDto) {
     return await this.qrCodeService.getUserSubscriptions(
-      CodeDto.code.toLowerCase(),
+      codeDto.code.toLowerCase(),
     );
   }
 }
