@@ -148,12 +148,14 @@ export class QrCodeService {
     const { isCodeMatch, email } = await this.isCodeMatch(code);
     if (isCodeMatch && email) {
       try {
-        const response = await axios.get(`USERS_URL/${email}`);
+        const response = await axios.get(
+          `http://localhost:3003/v1/api/users/findByEmail/${email}`,
+        );
         const user = response.data;
         if (!user) {
           throw new NotFoundException('User not found');
         }
-        return { subscriptions: user.subscriptions };
+        return { name: user.name, subscriptions: user.subscriptions };
       } catch (error) {
         throw new HttpException(
           error.response?.data || 'Error fetching user data',
