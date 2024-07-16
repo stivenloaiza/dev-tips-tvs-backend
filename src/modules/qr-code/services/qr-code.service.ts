@@ -47,31 +47,6 @@ export class QrCodeService {
   }
 
   async userExists(email: string): Promise<Boolean> {
-    // JSON burned to simulate email validation
-    // const users = [
-    //   {
-    //     apiKey: 'xyz7890abcdef',
-    //     name: 'Bob Johnson',
-    //     email: 'bob@example.com',
-    //     phone: '1987654321',
-    //     role: 'company',
-    //     managerName: 'Jane Doe',
-    //     managerEmail: 'jane.doe@example.com',
-    //     managerPhone: '+1122334455',
-    //     subscriptions: 'TvMedia',
-    //   },
-    //   {
-    //     apiKey: 'xyz7890abcde2',
-    //     name: 'Samuel Vera Miranda',
-    //     email: 'veramirandasamuel6@gmail.com',
-    //     phone: '3126621145',
-    //     role: 'company',
-    //     managerName: 'Jane Doe',
-    //     managerEmail: 'jane.doe@example.com',
-    //     managerPhone: '+1122334455',
-    //     subscriptions: 'TvMedia',
-    //   },
-    // ];
     const response = await axios.get(
       `http://localhost:3003/v1/api/users/findByEmail/${email}`,
     );
