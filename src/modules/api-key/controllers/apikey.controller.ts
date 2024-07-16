@@ -1,4 +1,4 @@
-import { Body, Controller, Get} from '@nestjs/common';
+import { Controller, Get, Query} from '@nestjs/common';
 import { ApiKeyAuthService } from '../services/apikey.service';
 import { 
    ApiOperation,
@@ -31,7 +31,20 @@ export class ApiKeyAuthController {
   @ApiResponse({ status: 201, description: 'The record has been successfully created.'})
   @ApiResponse({ status: 403, description: 'Forbidden.'})
   @Get('validate-apikey')
-  async validateApiKey(@Body() apikeyDto : AuthenticationApikeyDto) {
-    return await this.apiKeyAuthService.startByApiKey(apikeyDto.apiKey);
+  async validateApiKey(@Query() apikeyDto: AuthenticationApikeyDto) {
+    const valid = await this.apiKeyAuthService.startByApiKey(apikeyDto.apiKey);
+    if (valid) {
+      return {
+        message: 'API Key is valid',
+        data: valid
+      };
+    } else {
+      return {
+        message: 'API Key is invalid'
+      };
+    }
+  }
 }
-}
+
+
+//startByApiKey
