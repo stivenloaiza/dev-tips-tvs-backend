@@ -16,7 +16,7 @@ export class MockService {
         subscriptions: [
           {
             apiKey: 'xyz7890abcdef',
-            levels: [
+            level: [
               {
                 _id: {
                   $oid: '66845a35688ba50c93cf8bfb',
@@ -47,7 +47,7 @@ export class MockService {
         subscriptions: [
           {
             apiKey: 'xyz7890abcde2',
-            levels: [
+            level: [
               {
                 _id: {
                   $oid: '66845a35688ba50c93cf8bfb',
