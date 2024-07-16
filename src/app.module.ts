@@ -8,12 +8,11 @@ import { HttpModule } from '@nestjs/axios';
 import { MockTipsModule } from './mocks/mock-tips/mock-tips.module';
 import { MockModule } from './mocks/mock-user/mock.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
-      load:  [db_config],
+      load: [db_config],
       isGlobal: true,
     }),
     HttpModule,

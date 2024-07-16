@@ -19,18 +19,18 @@ export class MockService {
             level: [
               {
                 _id: {
-                  $oid: "66845a35688ba50c93cf8bfb"
+                  $oid: '66845a35688ba50c93cf8bfb',
                 },
-                name: "Junior",
-              }
+                name: 'Junior',
+              },
             ],
             technology: [
               {
                 _id: {
-                  $oid: "66854d83d09bd33eb9536dfd"
+                  $oid: '66854d83d09bd33eb9536dfd',
                 },
-                name: "JavaScript"
-              }
+                name: 'JavaScript',
+              },
             ],
           },
         ],
@@ -50,18 +50,18 @@ export class MockService {
             level: [
               {
                 _id: {
-                  $oid: "66845a35688ba50c93cf8bfb"
+                  $oid: '66845a35688ba50c93cf8bfb',
                 },
-                name: "Junior",
-              }
+                name: 'Junior',
+              },
             ],
             technology: [
               {
                 _id: {
-                  $oid: "66854d83d09bd33eb9536dfd"
+                  $oid: '66854d83d09bd33eb9536dfd',
                 },
-                name: "JavaScript"
-              }
+                name: 'JavaScript',
+              },
             ],
           },
         ],
