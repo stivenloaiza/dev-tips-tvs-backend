@@ -152,10 +152,15 @@ export class QrCodeService {
           `http://localhost:3003/v1/api/users/findByEmail/${email}`,
         );
         const user = response.data;
+        console.log(user);
         if (!user) {
           throw new NotFoundException('User not found');
         }
-        return { name: user.name, subscriptions: user.subscriptions };
+
+        const tvSubscriptions = user.subscriptions.filter(
+          (sub) => sub.type === 'tv',
+        );
+        return { name: user.name, subscriptions: tvSubscriptions };
       } catch (error) {
         throw new HttpException(
           error.response?.data || 'Error fetching user data',
