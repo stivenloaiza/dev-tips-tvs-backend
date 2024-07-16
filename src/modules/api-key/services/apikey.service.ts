@@ -13,6 +13,7 @@ export class ApiKeyAuthService {
       );
 
       const {
+        name,
         subscriptions: [
           {
             technology: [{ name: technologyName }],
@@ -24,7 +25,7 @@ export class ApiKeyAuthService {
       const tip = await this.axiosService.get(
         `http://localhost:3000/v1/api/mock-tips/tips?level=${levelName}&technology=${technologyName}`,
       );
-      return { tip: tip };
+      return { tip: tip, user: name };
     } catch (error) {
       throw new NotFoundException(`Api key ${apikeyDto} not found`);
     }
