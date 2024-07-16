@@ -6,9 +6,11 @@ import {
   ApiParam,
   ApiQuery,
   ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import { CodeDto, EmailDto } from '../dtos';
 
+@ApiTags('QR Code')
 @Controller('qr-code')
 export class QrCodeController {
   constructor(private readonly qrCodeService: QrCodeService) {}
@@ -57,6 +59,13 @@ export class QrCodeController {
     return this.qrCodeService.userExists(email);
   }
 
+  @ApiOperation({ summary: 'Generate verification code' })
+  @ApiQuery({
+    name: 'email',
+    required: true,
+    description: 'Email to generate the verification code',
+    type: String,
+  })
   @Get('generate-code/:email')
   async generateVerificationCode(@Param('email') email: string) {
     return await this.qrCodeService.generateVerificationCode(email);
