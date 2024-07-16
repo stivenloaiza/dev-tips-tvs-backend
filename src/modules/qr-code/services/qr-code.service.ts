@@ -152,7 +152,6 @@ export class QrCodeService {
           `http://localhost:3003/v1/api/users/findByEmail/${email}`,
         );
         const user = response.data;
-        console.log(user);
         if (!user) {
           throw new NotFoundException('User not found');
         }
