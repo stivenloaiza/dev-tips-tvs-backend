@@ -5,11 +5,12 @@ import { MockTipsService } from './mock-tips.service';
 export class MockTipsController {
   constructor(private readonly mockTipsService: MockTipsService) {}
 
-  @Get('tips')
-  async getTip(
-    @Query('level') seniority: string,
-    @Query('technology') technology: string,
-  ): Promise<{ body: string; title: string }> {
-    return await this.mockTipsService.getTips(seniority, technology);
-  }
+    @Get('tips')
+    async getTip(
+      @Query('level') seniority: string,
+      @Query('technology') technology: string,
+    ): Promise<{ body: string; title: string }> {
+      return await this.mockTipsService.getTips(seniority, technology);
+    }
+
 }
