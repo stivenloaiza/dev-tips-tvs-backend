@@ -4,30 +4,25 @@ import { AxiosService } from 'src/modules/axios/axios.service';
 
 @Injectable()
 export class ApiKeyAuthService {
-  constructor(private readonly axiosService: AxiosService) {}
+  constructor(private readonly axiosService: AxiosService) { }
 
-  async startByApiKey(apikeyDto: string): Promise<any> {
+  async startByApiKey(apikey: string): Promise<any> {
     try {
       const user = await this.axiosService.get(
-        `http://localhost:3000/v1/api/subscriptions/sub?apiKey=${apikeyDto}`,
+        ` http://localhost:3001/v1/api/tvs/getApiKey/${apikey} `
       );
-
       const {
-        name,
-        subscriptions: [
-          {
-            technology: [{ name: technologyName }],
-            level: [{ name: levelName }],
-          },
-        ],
+        level,
+        technology,
+        userId: { name }
       } = user;
-
-      const tip = await this.axiosService.get(
-        `http://localhost:3000/v1/api/mock-tips/tips?level=${levelName}&technology=${technologyName}`,
-      );
-      return { tip: tip, user: name };
+        const tip = await this.axiosService.get(
+        `http://localhost:3000/api/v1/mock-tips/tips?level=${level}&technology=${technology}`,
+      );  
+      return {tip: tip, name }
+      // { /*tip: tip,*/ user: name,};
     } catch (error) {
-      throw new NotFoundException(`Api key ${apikeyDto} not found`);
+      throw new NotFoundException(`Api key ${apikey} not found`);
     }
   }
 }
