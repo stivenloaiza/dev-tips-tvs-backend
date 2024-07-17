@@ -3,7 +3,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 @Injectable()
 export class MockTipsService {
   private readonly mockTips = [
-   
     {
       _id: {
         $oid: '668dca054888f5e5c58db0a5',
@@ -49,8 +48,6 @@ export class MockTipsService {
       deletedAt: null,
       __v: 0,
     },
-
-
 
     {
       _id: {
@@ -104,7 +101,6 @@ export class MockTipsService {
       deletedAt: null,
       __v: 0,
     },
-
 
     {
       _id: {
@@ -226,9 +222,7 @@ export class MockTipsService {
       );
     }
 
-    // Obtener un índice aleatorio
     const randomIndex = Math.floor(Math.random() * tips.length);
-    // Seleccionar el tip aleatorio
     const randomTip = tips[randomIndex];
 
     return randomTip;
