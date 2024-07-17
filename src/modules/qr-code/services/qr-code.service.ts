@@ -48,7 +48,7 @@ export class QrCodeService {
 
   async userExists(email: string): Promise<Boolean> {
     const response = await axios.get(
-      `http://localhost:3003/v1/api/users/findByEmail/${email}`,
+      `${process.env.USER_URL}/users/findByEmail/${email}`,
     );
     console.log(response);
     if (response.status === 200) {
@@ -98,13 +98,10 @@ export class QrCodeService {
   async sendEmail(email: string) {
     const codeFound = await this.generateVerificationCode(email);
     try {
-      const response = await axios.post(
-        'http://localhost:3002/api/v1/mail/code',
-        {
-          code: codeFound.code,
-          email: email,
-        },
-      );
+      const response = await axios.post(process.env.CRONJOBS_URL, {
+        code: codeFound.code,
+        email: email,
+      });
       return response.data;
     } catch (error) {
       throw new NotFoundException('Error sending email');
@@ -132,7 +129,7 @@ export class QrCodeService {
     if (isCodeMatch && email) {
       try {
         const response = await axios.get(
-          `http://localhost:3003/v1/api/users/findByEmail/${email}`,
+          `${process.env.USER_URL}/users/findByEmail/${email}`,
         );
         const user = response.data;
         if (!user) {
