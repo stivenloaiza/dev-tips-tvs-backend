@@ -162,7 +162,32 @@
 		},
 		{
 			"name": "START BY API KEY",
-			"item": [],
+			"item": [
+				{
+					"name": "Enter api key",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_BASE}}{{PORT}}{{PREFIX}}/auth/validate-apikey?apiKey={your-apikey}",
+							"host": [
+								"{{URL_BASE}}{{PORT}}{{PREFIX}}"
+							],
+							"path": [
+								"auth",
+								"validate-apikey"
+							],
+							"query": [
+								{
+									"key": "apiKey",
+									"value": "{your-apikey}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
 			"description": "**API Key Authentication**:\n\nThe API Key Authentication folder includes endpoints for validating user subscriptions using an API key. This method provides an alternative to QR code authentication, allowing users with an active subscription to access their content using a unique API key.\n\n- Users with an active subscription can authenticate using their unique API key.\n    \n- This method provides a seamless way to access content without the need for QR codes."
 		}
 	],
@@ -199,7 +224,7 @@
 		},
 		{
 			"key": "PREFIX",
-			"value": "/v1/api"
+			"value": "/api/v1"
 		}
 	]
 }
