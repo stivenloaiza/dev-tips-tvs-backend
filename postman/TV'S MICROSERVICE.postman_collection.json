@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "1d4a9a81-5333-4955-8e86-084247ce5f55",
+		"name": "TV'S MICROSERVICE",
+		"description": "**DEVTIPS** is a microservice designed to display programming tips on televisions. This service is part of a larger architecture aimed at delivering curated content to developers in training environments. The primary functionality of this microservice is to manage the authentication and retrieval of user subscriptions, which are then displayed on TVs.EndFragment\n\nStartFragment\n\n#### Key Features:\n\n1. **QR Code Authentication**:\n    \n    - Users can authenticate by scanning a QR code generated specifically for them.\n        \n    - The QR code, when scanned, allows users to verify their identity and access their subscriptions.\n        \n2. **API Key Authentication**:\n    \n    - Users with an active subscription can authenticate using their unique API key.\n        \n    - This method provides a seamless way to access content without the need for QR codes.\n        \n\n#### Additional Information:\n\n- **Service URL**: Ensure to replace `localhost` with the actual server URL when deploying or testing in different environments.\n    \n- **Error Handling**: The service provides comprehensive error handling and appropriate status codes for different scenarios like invalid codes, user not found, and server errors.\n    \n- **Integration**: The microservice integrates with other services like the User Service for user data and the Mail Service for sending emails.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "27402576"
+	},
+	"item": [
+		{
+			"name": "START BY QR CODE",
+			"item": [
+				{
+					"name": "QR GENERATOR",
+					"item": [
+						{
+							"name": "Generate QR",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{URL_BASE}}{{PORT}}{{PREFIX}}/qr-code/generate-qr"
+							},
+							"response": []
+						},
+						{
+							"name": "Verify QR",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL_BASE}}{{PORT}}{{PREFIX}}/qr-code/verify-qr?code=2becfca5-a29a-4d6e-b500-2e697b8980bc",
+									"host": [
+										"{{URL_BASE}}{{PORT}}{{PREFIX}}"
+									],
+									"path": [
+										"qr-code",
+										"verify-qr"
+									],
+									"query": [
+										{
+											"key": "code",
+											"value": "2becfca5-a29a-4d6e-b500-2e697b8980bc"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check Authentication",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{URL_BASE}}{{PORT}}{{PREFIX}}/qr-code/check/2becfca5-a29a-4d6e-b500-2e697b8980bc"
+							},
+							"response": []
+						}
+					],
+					"description": "The QR Code Management folder contains all the necessary endpoints for handling the lifecycle of QR codes within the DEVTIPS service. These endpoints allow the generation, verification, and authentication check of QR codes, providing users with a seamless authentication method for accessing programming tips on TVs.\n\n#### Endpoints:\n\n1. **Generate QR Code**:\n    \n    - **Endpoint**: `GET /generate-qr`\n        \n    - **Description**: Generates a unique QR code along with its associated URL. Users can scan this QR code to authenticate themselves and access the service.\n        \n    - **Response**: Returns a JSON object containing the generated code and URL.\n        \n2. **Verify QR Code**:\n    \n    - **Endpoint**: `GET /verify-qr`\n        \n    - **Description**: Verifies the validity of the provided QR code to ensure it is genuine and has not been tampered with.\n        \n    - **Query Parameter**:\n        \n        - `code` (string) - The unique code of the QR code to be verified.\n            \n    - **Response**: Returns a JSON object indicating whether the QR code is verified.\n        \n3. **Check QR Code Authentication**:\n    \n    - **Endpoint**: `GET /check/:code`\n        \n    - **Description**: Checks whether the specified QR code has been authenticated successfully by the user.\n        \n    - **Path Parameter**:\n        \n        - `code` (string) - The unique code of the QR code to be checked.\n            \n    - **Response**: Returns a JSON object indicating whether the QR code is authenticated.\n        \n\nThis folder organizes all QR code-related functionalities, making it easy to manage the authentication process via QR codes within the DEVTIPS service."
+				},
+				{
+					"name": "SEND CODE IN EMAIL",
+					"item": [
+						{
+							"name": "Check if user exists by email",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL_BASE}}{{PORT}}{{PREFIX}}/qr-code/user-exists?email=",
+									"host": [
+										"{{URL_BASE}}{{PORT}}{{PREFIX}}"
+									],
+									"path": [
+										"qr-code",
+										"user-exists"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Generate verification code",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{URL_BASE}}{{PORT}}{{PREFIX}}/qr-code/generate-code/veramirandasamuel6@gmail.com"
+							},
+							"response": []
+						},
+						{
+							"name": "Send email",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"veramirandasamuel6@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{URL_BASE}}{{PORT}}{{PREFIX}}/qr-code/send-code"
+							},
+							"response": []
+						}
+					],
+					"description": "The User Verification and Code Management folder encompasses the endpoints required for verifying user existence, generating verification codes, and sending these codes via email. These functionalities ensure secure and authenticated access to the DEVTIPS service, enhancing the user experience by providing a reliable verification mechanism.\n\n#### Endpoints:\n\n1. **Check if User Exists**:\n    \n    - **Endpoint**: `GET /qr-code/user-exists`\n        \n    - **Description**: Verifies whether a user with the specified email exists in the system. This is the first step in the verification process.\n        \n    - **Query Parameter**:\n        \n        - `email` (string) - The email address of the user to be checked.\n            \n    - **Response**: Returns a JSON object indicating whether the user exists.\n        \n2. **Generate Verification Code**:\n    \n    - **Endpoint**: `GET /qr-code/generate-code/:email`\n        \n    - **Description**: Generates a unique 6-digit hexadecimal verification code for the specified email. This code is used for further authentication processes.\n        \n    - **Path Parameter**:\n        \n        - `email` (string) - The email address of the user for whom the verification code is being generated.\n            \n    - **Response**: Returns a JSON object containing the generated verification code.\n        \n3. **Send Verification Code via Email**:\n    \n    - **Endpoint**: `POST /qr-code/send-code`\n        \n    - **Description**: Sends the generated verification code to the specified email address using the CronJobs microservice. This ensures that the user receives the code securely.\n        \n    - **Body Parameter**:\n        \n        - `email` (string) - The email address to which the verification code will be sent.\n            \n    - **Response**: Returns a JSON object confirming the email has been sent successfully.\n        \n\nThis folder centralizes all functionalities related to user verification and code management, streamlining the process of user authentication for accessing DEVTIPS on TVs."
+				},
+				{
+					"name": "ENTER ACCESS CODE",
+					"item": [
+						{
+							"name": "Enter access code",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"code\": \"92459B\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{URL_BASE}}{{PORT}}{{PREFIX}}/qr-code/code-match"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Users subscriptions",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"code\": \"4B506A\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{URL_BASE}}{{PORT}}{{PREFIX}}/qr-code/code-subscriptions"
+							},
+							"response": []
+						}
+					],
+					"description": "The Enter Access Code folder contains endpoints related to the user authentication process using a unique access code. The primary functionality of this folder is to allow users to enter their access code and retrieve their subscription details, enabling a seamless and secure access experience to DEVTIPS on TVs.\n\n#### Endpoints:\n\n1. **Enter Access Code**:\n    \n    - **Endpoint**: `POST /qr-code/code-match`\n        \n    - **Description**: This endpoint is designed to match the provided access code with the stored codes in the system. Although it is not primarily used, it serves as a backup for code verification.\n        \n    - **Body Parameter**:\n        \n        - `code` (string) - The access code to be matched.\n            \n    - **Response**: Returns a JSON object indicating whether the code match was successful.\n        \n2. **Get User Subscriptions by Access Code**:\n    \n    - **Endpoint**: `POST /qr-code/code-subscriptions`\n        \n    - **Description**: The primary endpoint for retrieving the user’s subscription details by providing a valid access code. This endpoint verifies the code and fetches the associated user subscriptions, specifically tailored for TV tips.\n        \n    - **Body Parameter**:\n        \n        - `code` (string) - The access code used for retrieving subscription details.\n            \n    - **Response**: Returns a JSON object containing the user’s name and the list of TV subscriptions."
+				}
+			],
+			"description": "**QR Code Authentication**:\n\nThe QR Code Authentication folder contains endpoints related to generating, verifying, and checking the authentication status of QR codes. This method allows users to authenticate by scanning a unique QR code, providing a convenient and secure way to access their programming tips on TV.\n\n- Users can authenticate by scanning a QR code generated specifically for them.\n    \n- The QR code, when scanned, allows users to verify their identity and access their subscriptions."
+		},
+		{
+			"name": "START BY API KEY",
+			"item": [
+				{
+					"name": "Enter api key",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL_BASE}}{{PORT}}{{PREFIX}}/auth/validate-apikey?apiKey={your-apikey}",
+							"host": [
+								"{{URL_BASE}}{{PORT}}{{PREFIX}}"
+							],
+							"path": [
+								"auth",
+								"validate-apikey"
+							],
+							"query": [
+								{
+									"key": "apiKey",
+									"value": "{your-apikey}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "**API Key Authentication**:\n\nThe API Key Authentication folder includes endpoints for validating user subscriptions using an API key. This method provides an alternative to QR code authentication, allowing users with an active subscription to access their content using a unique API key.\n\n- Users with an active subscription can authenticate using their unique API key.\n    \n- This method provides a seamless way to access content without the need for QR codes."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL_BASE",
+			"value": "http://localhost:"
+		},
+		{
+			"key": "PORT",
+			"value": "3000"
+		},
+		{
+			"key": "PREFIX",
+			"value": "/api/v1"
+		}
+	]
+}
