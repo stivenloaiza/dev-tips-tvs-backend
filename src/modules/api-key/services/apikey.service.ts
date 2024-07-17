@@ -1,28 +1,36 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AxiosService } from 'src/modules/axios/axios.service';
+import axios from 'axios';
 
 
 @Injectable()
 export class ApiKeyAuthService {
-  constructor(private readonly axiosService: AxiosService) { }
 
   async startByApiKey(apikey: string): Promise<any> {
     try {
-      const user = await this.axiosService.get(
-        ` http://localhost:3001/v1/api/tvs/getApiKey/${apikey} `
-      );
+      const response = await axios.get(`http://localhost:3001/v1/api/tvs/getApiKey/${apikey}`);
+      const user = response.data;
+
       const {
         level,
         technology,
         userId: { name }
       } = user;
-        const tip = await this.axiosService.get(
-        `http://localhost:3000/api/v1/mock-tips/tips?level=${level}&technology=${technology}`,
-      );  
-      return {tip: tip, name }
-      // { /*tip: tip,*/ user: name,};
+
+      const tipResponse = await axios.get(`http://localhost:3000/api/v1/mock-tips/tips`, {
+        params: {
+          level,
+          technology
+        }
+      });
+
+      const tip = tipResponse.data;
+      return { tip, name };
     } catch (error) {
-      throw new NotFoundException(`Api key ${apikey} not found`);
+      if (error.response && error.response.status === 404) {
+        throw new NotFoundException(`API key ${apikey} not found`);
+      } else {
+        throw new Error(`Error fetching data: ${error.message}`);
+      }
     }
   }
 }

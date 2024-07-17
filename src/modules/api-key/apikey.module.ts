@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ApiKeyAuthController } from './controllers/apikey.controller';
-import { AxiosModule } from '../axios/axios.module';
 import { HttpModule } from '@nestjs/axios';
-import { MockModule } from '../../mocks/mock-user/mock.module';
 import { ApiKeyAuthService } from './services/apikey.service';
 import { AuthenticationApikeyDto } from './dtos/dtos-apikey';
+import { MockTipsModule } from 'src/mocks/mock-tips/mock-tips.module';
 
 @Module({
-  imports: [AxiosModule, MockModule, HttpModule],
+  imports: [MockTipsModule, HttpModule],
   controllers: [ApiKeyAuthController],
   providers: [
     ApiKeyAuthService,
@@ -15,4 +14,4 @@ import { AuthenticationApikeyDto } from './dtos/dtos-apikey';
   ],
   exports: [ApiKeyAuthService],
 })
-export class ApikeyModule {}
+export class ApikeyModule { }

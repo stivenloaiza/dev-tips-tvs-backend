@@ -6,7 +6,6 @@ import { QrCodeModule } from './modules/qr-code/qr-code.module';
 import db_config from './modules/persistence/db-config';
 import { HttpModule } from '@nestjs/axios';
 import { MockTipsModule } from './mocks/mock-tips/mock-tips.module';
-import { MockModule } from './mocks/mock-user/mock.module';
 
 @Module({
   imports: [
@@ -20,7 +19,6 @@ import { MockModule } from './mocks/mock-user/mock.module';
     QrCodeModule,
     ApikeyModule,
     MockTipsModule,
-    MockModule,
   ],
   controllers: [],
   providers: [],
