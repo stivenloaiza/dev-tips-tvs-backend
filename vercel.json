@@ -1,0 +1,27 @@
+{
+    "builds": [
+      {
+        "src": "src/main.ts",
+        "use": "@vercel/node",
+        "config": {
+          "distDir": "dist"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "dist/$1"
+      }
+    ],
+    "env": {
+      "DB_NAME": "tvs",
+      "DB_CONNECTION": "mongodb://",
+      "DB_HOST": "localhost:27017",
+      "DB_USER": "tvs",
+      "DB_PASSWORD": "tvs123",
+      "DB_CLUSTER": "tvs.j6k6zwu",
+      "ENVIRONMENT": "production",
+      "PORT": "3000"
+    }
+  }
