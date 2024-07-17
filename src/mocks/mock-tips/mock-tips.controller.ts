@@ -1,6 +1,8 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { MockTipsService } from './mock-tips.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Mock Tips')
 @Controller('mock-tips')
 export class MockTipsController {
   constructor(private readonly mockTipsService: MockTipsService) {}
