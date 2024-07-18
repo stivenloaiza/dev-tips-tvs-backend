@@ -8,9 +8,11 @@ import dbconfig from './db-config';
   imports: [
     MongooseModule.forRootAsync({
       useFactory: (configService: ConfigType<typeof dbconfig>) => {
-        const { db } = configService;
+        const { db, env } = configService;
         const uriDb =
-             `mongodb+srv://${db.user}:${db.password}@${db.cluster}.mongodb.net/?retryWrites=true&w=majority&appName=Tvs`;
+          env === process.env.ENVIRONMENT
+            ? `${db.connection}${db.host}`
+            : `mongodb+srv://${db.user}:${db.password}@${db.cluster}.mongodb.net/?retryWrites=true&w=majority&appName=Tvs`;
         return {
           uri: uriDb,
         };

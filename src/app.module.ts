@@ -1,17 +1,23 @@
 import { Module } from '@nestjs/common';
-import { PersistenceModule } from './persistence/persistence.module';
+import { PersistenceModule } from './modules/persistence/persistence.module';
 import { ConfigModule } from '@nestjs/config';
-import db_config from './persistence/db-config';
+import { ApikeyModule } from './modules/api-key/apikey.module';
+import { QrCodeModule } from './modules/qr-code/qr-code.module';
+import db_config from './modules/persistence/db-config';
+import { HttpModule } from '@nestjs/axios';
+
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
-      load:[db_config],
+      load: [db_config],
       isGlobal: true,
     }),
-
-    PersistenceModule
+    HttpModule,
+    PersistenceModule,
+    QrCodeModule,
+    ApikeyModule,
   ],
   controllers: [],
   providers: [],
