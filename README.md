@@ -145,7 +145,7 @@ http://localhost:{PORT}/api/doc
 
 ## Colaboradores
 
-- Samuel Vera Miranda: [GitHub profile](https://github.com/SamuelSml) | Backend
+- Samuel Vera Miranda: [GitHub profile](https://github.com/SamuelSml8) | Backend
 - Manuela Giraldo Arango: [GitHub profile](https://github.com/Arangog20) | Backend
 - Daniel Stiven López Carmona: [GitHub profile](https://github.com/stiv-ca) | Frontend
 - Alexander Hernández Martínez: [GitHub profile](https://github.com/AlexanderHernandez17) | Frontend
