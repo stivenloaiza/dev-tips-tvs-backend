@@ -1,4 +1,9 @@
-import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Headers,
+  HttpException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { InjectModel } from '@nestjs/mongoose';
 import { QrCode } from '../entities/qr-code.entity';
@@ -47,13 +52,13 @@ export class QrCodeService {
   }
 
   async userExists(email: string): Promise<Boolean> {
-    const response = await axios.get(
-      `${process.env.USER_URL}/users/findByEmail/${email}`,
-    );
-    console.log(response);
-    if (response.status === 200) {
-      return true;
-    } else {
+    try {
+      const response = await axios.get(
+        `${process.env.USER_URL}/users/findByEmail/${email}`,
+      );
+      return response.status === 200;
+    } catch (error) {
+      console.error('Error fetching user:', error);
       return false;
     }
   }
@@ -98,13 +103,25 @@ export class QrCodeService {
   async sendEmail(email: string) {
     const codeFound = await this.generateVerificationCode(email);
     try {
-      const response = await axios.post(process.env.CRONJOBS_URL, {
-        code: codeFound.code,
-        email: email,
-      });
+      const response = await axios.post(
+        `${process.env.CRONJOBS_URL}`,
+        {
+          code: codeFound.code,
+          email: email,
+        },
+        {
+          headers: {
+            'x-api-key': process.env.CRONJOBS_API_KEY,
+          },
+        },
+      );
       return response.data;
     } catch (error) {
-      throw new NotFoundException('Error sending email');
+      console.error('Error sending email:', error);
+      throw new HttpException(
+        'Error sending email',
+        error.response?.status || 500,
+      );
     }
   }
 
@@ -120,7 +137,7 @@ export class QrCodeService {
       }
       return { isCodeMatch: false };
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status || 500);
     }
   }
 
@@ -139,7 +156,17 @@ export class QrCodeService {
         const tvSubscriptions = user.subscriptions.filter(
           (sub) => sub.type === 'tv',
         );
-        return { name: user.name, subscriptions: tvSubscriptions };
+
+        const tipResponse = await axios.get(process.env.TIPS_URL);
+
+        const tip = tipResponse.data;
+        const randomIndex = Math.floor(Math.random() * tip.length);
+        const randomTip = tip[randomIndex];
+        return {
+          name: user.name,
+          subscriptions: tvSubscriptions,
+          tip: randomTip,
+        };
       } catch (error) {
         throw new HttpException(
           error.response?.data || 'Error fetching user data',
@@ -151,3 +178,5 @@ export class QrCodeService {
     }
   }
 }
+
+// http://localhost:3001/tips/all?level=senior&technology=c%23&limit=1
