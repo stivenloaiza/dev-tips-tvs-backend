@@ -2,37 +2,64 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# TV'S MICROSERVICE | DEV TIPS
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This is the TV'S microservice for the DevTips project. Its objective is to show tips based on the user's subscription information, facilitating the process by generating and verifying identity through QR codes and subscription API keys.
 
-## Description
+## Run this project
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### 1. Clone this repository
 
-## Installation
+```bash
+# Option 1: Clone using the web URL (HTTPS)
+$ git clone https://github.com/stivenloaiza/dev-tips-tvs-backend.git
+
+# Option 2: Use a password-protected SSH key (SSH)
+$ git clone git@github.com:stivenloaiza/dev-tips-tvs-backend.git
+```
+
+### 2. Install dependencies
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+### 3. Environment Variables
+
+To configure the environment variables, follow these steps:
+
+1. Create a `.env` file in the root of the project
+2. Copy the content of this file and paste it in the `.env` file
+3. Fill the variables with your data
+
+```bash
+#* ENVIRONMENT VARIABLES | TV'S MICROSERVICE
+
+#* DATABASE ENVIRONMENT
+ENVIRONMENT = 'YOUR ENVIRONMENT'
+
+#* DATABASE CONECTION REMOTE
+# EXAMPLE: mongodb+srv://{DB_USERNAME}:{DB_PASSWORD}@{DB_CLUSTER}.mongodb.net/?retryWrites=true&w=majority&appName=Tvs
+DB_USERNAME = 'YOU DB USERNAME'
+DB_PASSWORD = 'YOUR DB PASSWORD'
+DB_CLUSTER = 'YOUR DB CLUSTER'
+
+#* DATABASE CONECTION LOCAL
+# EXAMPLE: {DB_CONNECTION}{DB_HOST}
+DB_CONNECTION = 'YOUR DB CONNECTION'
+DB_HOST = 'YOUR DB HOST'
+
+#* PROJECT PORT
+PORT = 'YOUR PORT'
+
+#* MICROSERVICES URL
+USER_URL = 'MICROSERVICE URL USER'
+CRONJOBS_URL = 'MICROSERVICE URL CRONJOBS'
+TIPS_URL = 'MICROSERVICE URL TIPS'
+AUTH_URL = 'MICROSERVICE URL AUTH'
+```
+
+### 4. Running the app
 
 ```bash
 # development
@@ -45,29 +72,87 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## Endpoints
+
+### Start by QR Code
+
+- **Generate QR Code**
+
+  - **GET** `/api/v1/qr-code/generate-qr`
+  - Generates a QR code and an associated URL with a unique code.
+
+- **Check Authentication**
+
+  - **GET** `/api/v1/qr-code/check/:code`
+  - Verify if a QR code has been authenticated.
+
+- **Verify QR Code**
+
+  - **GET** `/api/v1/qr-code/verify-qr`
+  - Verify the authenticity of a QR code.
+
+- **User Exists**
+
+  - **GET** `/api/v1/qr-code/user-exists`
+  - Verify if a user exists by email.
+
+- **Generate Verification Code**
+
+  - **GET** `/api/v1/qr-code/generate-code/:email`
+  - It generates a verification code and associates it with an email.
+
+- **Send Verification Code**
+
+  - **POST** `/api/v1/qr-code/send-code`
+  - Sends a verification code to the user's email address.
+
+- **Code Match**
+
+  - **POST** `/api/v1/qr-code/code-match`
+  - Verifies if a verification code is valid and has not been used.
+
+- **Get User Subscriptions**
+  - **POST** `/api/v1/qr-code/code-subscriptions`
+  - Obtains user subscriptions based on a verification code.
+
+### Start by API Key
+
+- **Validate API Key**
+  - **GET** `/api/v1/auth/validate-apikey`
+  - Valida una API key.
+
+### Mock Tips
+
+- **Get Mock Tips**
+  - **GET** `/api/v1/mock-tips/tips`
+  - Obtiene tips mock para propósitos de prueba.
+
+## Postman collection
+
+**Postman collection:** [Collection here](./postman/TV'S%20MICROSERVICE.postman_collection.json)
+
+## Swagger documentation
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+http://localhost:{PORT}/api/doc
 ```
 
-## Support
+## Consumption to Other Microservices
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Users**: [GitHub repository](https://github.com/stivenloaiza/dev-tips-users-backend)
+- **Tips**: [GitHub repository](https://github.com/stivenloaiza/dev-tips-tips-backend)
+- **Cron Jobs**: [GitHub repository](https://github.com/stivenloaiza/dev-tips-cronjobs-backend)
 
-## Stay in touch
+## Colaboradores
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Samuel Vera Miranda: [GitHub profile](https://github.com/SamuelSml8) | Backend
+- Manuela Giraldo Arango: [GitHub profile](https://github.com/Arangog20) | Backend
+- Daniel Stiven López Carmona: [GitHub profile](https://github.com/stiv-ca) | Frontend
+- Alexander Hernández Martínez: [GitHub profile](https://github.com/AlexanderHernandez17) | Frontend
+- Juan Camilo Atehortua: [GitHub profile](https://github.com/JuanCamilo97-stack) | Frontend
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
