@@ -47,32 +47,15 @@ export class QrCodeService {
   }
 
   async userExists(email: string): Promise<Boolean> {
-    // JSON burned to simulate email validation
-    const users = [
-      {
-        apiKey: 'xyz7890abcdef',
-        name: 'Bob Johnson',
-        email: 'bob@example.com',
-        phone: '1987654321',
-        role: 'company',
-        managerName: 'Jane Doe',
-        managerEmail: 'jane.doe@example.com',
-        managerPhone: '+1122334455',
-        subscriptions: 'TvMedia',
-      },
-      {
-        apiKey: 'xyz7890abcde2',
-        name: 'Samuel Vera Miranda',
-        email: 'veramirandasamuel6@gmail.com',
-        phone: '3126621145',
-        role: 'company',
-        managerName: 'Jane Doe',
-        managerEmail: 'jane.doe@example.com',
-        managerPhone: '+1122334455',
-        subscriptions: 'TvMedia',
-      },
-    ];
-    return users.some((user) => user.email === email);
+    try {
+      const response = await axios.get(
+        `${process.env.USER_URL}/users/findByEmail/${email}`,
+      );
+      return response.status === 200;
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      return false;
+    }
   }
 
   async generateVerificationCode(
@@ -116,15 +99,24 @@ export class QrCodeService {
     const codeFound = await this.generateVerificationCode(email);
     try {
       const response = await axios.post(
-        'http://localhost:3002/api/v1/mail/code',
+        `${process.env.CRONJOBS_URL}`,
         {
           code: codeFound.code,
           email: email,
         },
+        {
+          headers: {
+            'x-api-key': process.env.CRONJOBS_API_KEY,
+          },
+        },
       );
       return response.data;
     } catch (error) {
-      throw new NotFoundException('Error sending email');
+      console.error('Error sending email:', error);
+      throw new HttpException(
+        'Error sending email',
+        error.response?.status || 500,
+      );
     }
   }
 
@@ -140,7 +132,7 @@ export class QrCodeService {
       }
       return { isCodeMatch: false };
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error.message, error.status || 500);
     }
   }
 
@@ -148,12 +140,28 @@ export class QrCodeService {
     const { isCodeMatch, email } = await this.isCodeMatch(code);
     if (isCodeMatch && email) {
       try {
-        const response = await axios.get(`USERS_URL/${email}`);
+        const response = await axios.get(
+          `${process.env.USER_URL}/users/findByEmail/${email}`,
+        );
         const user = response.data;
         if (!user) {
           throw new NotFoundException('User not found');
         }
-        return { subscriptions: user.subscriptions };
+
+        const tvSubscriptions = user.subscriptions.filter(
+          (sub) => sub.type === 'tv',
+        );
+
+        const tipResponse = await axios.get(process.env.TIPS_URL);
+
+        const tip = tipResponse.data;
+        const randomIndex = Math.floor(Math.random() * tip.length);
+        const randomTip = tip[randomIndex];
+        return {
+          name: user.name,
+          subscriptions: tvSubscriptions,
+          tip: randomTip,
+        };
       } catch (error) {
         throw new HttpException(
           error.response?.data || 'Error fetching user data',
@@ -165,3 +173,5 @@ export class QrCodeService {
     }
   }
 }
+
+// http://localhost:3001/tips/all?level=senior&technology=c%23&limit=1

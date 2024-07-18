@@ -27,7 +27,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('TV´s Tips')
     .setDescription(
-      'The "Programming Tips" project is a solution that allows companies to display brief and concise programming tips in various languages and experience levels on television screens. Each QR contains user authentication to show information based on their subscription. This API allows companies to retrieve programming tips based on the desired language and experience level and display them on television screens within their facilities. The QR code accesses more detailed information on an external webpage. Daniel Lopez, Manuela Giraldo, Samuel Vera, Alexander Hernandez.',
+      'The "Programming Tips" project is a solution that allows companies to display brief and concise programming tips in various languages and experience levels on television screens. Each QR contains user authentication to show information based on their subscription. This API allows companies to retrieve programming tips based on the desired language and experience level and display them on television screens within their facilities. The QR code accesses more detailed information on an external webpage. \n\n ▪️ Samuel Vera Miranda \n\n ▪️ Manuela Giraldo Arango \n\n ▪️ Daniel Stiven López Carmona \n\n ▪️ Alexander Hernández Martínez',
     )
     .setVersion('1.0')
     .addTag('TV´s tips')
@@ -36,8 +36,5 @@ async function bootstrap() {
   SwaggerModule.setup('api/doc', app, document);
 
   await app.listen(port);
-
-  console.log(`Running app on :http://localhost:${port}/v1/api`);
-  console.log(`Access to the project via Swagger: localhost:${port}/api/doc`);
 }
 bootstrap();
