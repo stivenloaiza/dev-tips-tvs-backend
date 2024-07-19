@@ -145,31 +145,57 @@ export class QrCodeService {
         );
         const user = response.data;
         if (!user) {
-          throw new NotFoundException('User not found');
+          return {
+            statusCode: 404,
+            message: 'User not found',
+          };
         }
 
         const tvSubscriptions = user.subscriptions.filter(
           (sub) => sub.type === 'tv',
         );
+        if (tvSubscriptions.length === 0) {
+          return {
+            statusCode: 404,
+            message: 'No TV subscriptions found',
+          };
+        }
 
-        const tipResponse = await axios.get(process.env.TIPS_URL);
+        const subscription = tvSubscriptions[0];
 
-        const tip = tipResponse.data;
-        const randomIndex = Math.floor(Math.random() * tip.length);
-        const randomTip = tip[randomIndex];
+        const tipResponse = await axios.get(
+          `${process.env.TIPS_URL}?level=${subscription.level}&technology=${subscription.technology}`,
+        );
+
+        const tips = tipResponse.data;
+        if (!Array.isArray(tips) || tips.length === 0) {
+          return {
+            name: user.name,
+            subscriptions: tvSubscriptions,
+            tip: 'Tip not found',
+          };
+        }
+
+        const randomIndex = Math.floor(Math.random() * tips.length);
+        const randomTip = tips[randomIndex];
+
         return {
           name: user.name,
           subscriptions: tvSubscriptions,
-          tip: randomTip,
+          tip: randomTip || 'Tip not found',
         };
       } catch (error) {
-        throw new HttpException(
-          error.response?.data || 'Error fetching user data',
-          error.response?.status || 500,
-        );
+        console.error('Error fetching user data or tips:', error);
+        return {
+          statusCode: 500,
+          message: 'Error fetching user data or tips',
+        };
       }
     } else {
-      throw new NotFoundException('Invalid code');
+      return {
+        statusCode: 404,
+        message: 'Invalid code',
+      };
     }
   }
 }
