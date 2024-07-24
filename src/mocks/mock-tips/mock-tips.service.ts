@@ -7,7 +7,7 @@ export class MockTipsService {
       _id: {
         $oid: '668dca054888f5e5c58db0a5',
       },
-      
+
       id: 4,
       img_url: 'https://example.com/images/tip4.jpg',
       title: 'Use const and let',

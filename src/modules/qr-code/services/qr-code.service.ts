@@ -46,7 +46,7 @@ export class QrCodeService {
     return qrCode ? qrCode.isAuthenticated : false;
   }
 
-  async userExists(email: string): Promise<Boolean> {
+  async userExists(email: string): Promise<boolean> {
     const response = await axios.get(
       `${process.env.USER_URL}/users/findByEmail/${email}`,
     );

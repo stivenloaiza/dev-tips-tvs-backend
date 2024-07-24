@@ -12,7 +12,7 @@ async function bootstrap() {
   });
   const port = process.env.PORT || 4000;
 
-  app.setGlobalPrefix('/api/v1');
+  app.setGlobalPrefix('/v1/api');
 
   app.useGlobalPipes(
     new ValidationPipe({

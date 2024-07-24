@@ -8,10 +8,7 @@ import { MockTipsModule } from 'src/mocks/mock-tips/mock-tips.module';
 @Module({
   imports: [MockTipsModule, HttpModule],
   controllers: [ApiKeyAuthController],
-  providers: [
-    ApiKeyAuthService,
-    AuthenticationApikeyDto
-  ],
+  providers: [ApiKeyAuthService, AuthenticationApikeyDto],
   exports: [ApiKeyAuthService],
 })
-export class ApikeyModule { }
+export class ApikeyModule {}
