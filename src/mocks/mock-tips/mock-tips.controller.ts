@@ -15,3 +15,4 @@ export class MockTipsController {
     return await this.mockTipsService.getTips(seniority, technology);
   }
 }
+
