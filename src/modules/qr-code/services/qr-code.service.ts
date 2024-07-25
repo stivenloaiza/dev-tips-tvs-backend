@@ -46,14 +46,14 @@ export class QrCodeService {
     return qrCode ? qrCode.isAuthenticated : false;
   }
 
-  async userExists(email: string): Promise<Boolean> {
-    try {
-      const response = await axios.get(
-        `${process.env.USER_URL}/users/findByEmail/${email}`,
-      );
-      return response.status === 200;
-    } catch (error) {
-      console.error('Error fetching user:', error);
+  async userExists(email: string): Promise<boolean> {
+    const response = await axios.get(
+      `${process.env.USER_URL}/users/findByEmail/${email}`,
+    );
+    console.log(response);
+    if (response.status === 200) {
+      return true;
+    } else {
       return false;
     }
   }

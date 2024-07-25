@@ -8,10 +8,7 @@ import { AuthenticationApikeyDto } from './dtos/dtos-apikey';
 @Module({
   imports: [ HttpModule],
   controllers: [ApiKeyAuthController],
-  providers: [
-    ApiKeyAuthService,
-    AuthenticationApikeyDto
-  ],
+  providers: [ApiKeyAuthService, AuthenticationApikeyDto],
   exports: [ApiKeyAuthService],
 })
-export class ApikeyModule { }
+export class ApikeyModule {}
