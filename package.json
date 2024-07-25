@@ -60,6 +60,23 @@
     "typescript": "^5.1.3"
   },
   "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "../coverage",
+    "coverageThreshold": {
+      "global": {
+        "functions": 30,
+        "lines": 30
+      }
+    },
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/",
+      "/build/",
+      "/src/modules/api-key/entities",
+      "/src/modules/*/dto/",
+      ".eslintrc.js",
+      ".prettierrc"
+    ],
     "moduleFileExtensions": [
       "js",
       "json",
@@ -73,7 +90,6 @@
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
-    "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
 }
