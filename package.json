@@ -72,10 +72,11 @@
       "/node_modules/",
       "/dist/",
       "/build/",
-      "/src/modules/api-key/entities",
-      "/src/modules/*/dto/",
       ".eslintrc.js",
-      ".prettierrc"
+      ".prettierrc",
+      "\\.module\\.ts$",
+      "\\.entity\\.ts$",
+      "main\\.ts$"
     ],
     "moduleFileExtensions": [
       "js",

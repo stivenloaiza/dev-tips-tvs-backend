@@ -8,22 +8,38 @@ describe('QrCodeController', () => {
   let qrCodeService: QrCodeService;
 
   const mockQrCodeService = {
-    generateQrCode: jest.fn().mockResolvedValue({ code: 'mockCode', url: 'mockUrl' }),
+    generateQrCode: jest
+      .fn()
+      .mockResolvedValue({ code: 'mockCode', url: 'mockUrl' }),
     verifyQrCode: jest.fn().mockResolvedValue(true),
     checkAuthentication: jest.fn().mockResolvedValue(true),
     userExists: jest.fn().mockResolvedValue(true),
-    generateVerificationCode: jest.fn().mockResolvedValue({ code: 'mockCode', email: 'mockEmail', used: false, createdAt: new Date(), expiredAt: new Date() }),
+    generateVerificationCode: jest
+      .fn()
+      .mockResolvedValue({
+        code: 'mockCode',
+        email: 'mockEmail',
+        used: false,
+        createdAt: new Date(),
+        expiredAt: new Date(),
+      }),
     sendEmail: jest.fn().mockResolvedValue({ success: true }),
-    isCodeMatch: jest.fn().mockResolvedValue({ isCodeMatch: true, email: 'mockEmail' }),
-    getUserSubscriptions: jest.fn().mockResolvedValue({ name: 'mockName', subscriptions: [], tip: 'mockTip' }),
+    isCodeMatch: jest
+      .fn()
+      .mockResolvedValue({ isCodeMatch: true, email: 'mockEmail' }),
+    getUserSubscriptions: jest
+      .fn()
+      .mockResolvedValue({
+        name: 'mockName',
+        subscriptions: [],
+        tip: 'mockTip',
+      }),
   };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [QrCodeController],
-      providers: [
-        { provide: QrCodeService, useValue: mockQrCodeService },
-      ],
+      providers: [{ provide: QrCodeService, useValue: mockQrCodeService }],
     }).compile();
 
     qrCodeController = module.get<QrCodeController>(QrCodeController);
@@ -54,7 +70,9 @@ describe('QrCodeController', () => {
     it('should check authentication for a QR code', async () => {
       const result = await qrCodeController.checkAuthentication('mockCode');
       expect(result).toEqual({ authenticated: true });
-      expect(qrCodeService.checkAuthentication).toHaveBeenCalledWith('mockCode');
+      expect(qrCodeService.checkAuthentication).toHaveBeenCalledWith(
+        'mockCode',
+      );
     });
   });
 
@@ -68,15 +86,26 @@ describe('QrCodeController', () => {
 
   describe('generateVerificationCode', () => {
     it('should generate a verification code', async () => {
-      const result = await qrCodeController.generateVerificationCode('mockEmail');
-      expect(result).toEqual({ code: 'mockCode', email: 'mockEmail', used: false, createdAt: expect.any(Date), expiredAt: expect.any(Date) });
-      expect(qrCodeService.generateVerificationCode).toHaveBeenCalledWith('mockEmail');
+      const result =
+        await qrCodeController.generateVerificationCode('mockEmail');
+      expect(result).toEqual({
+        code: 'mockCode',
+        email: 'mockEmail',
+        used: false,
+        createdAt: expect.any(Date),
+        expiredAt: expect.any(Date),
+      });
+      expect(qrCodeService.generateVerificationCode).toHaveBeenCalledWith(
+        'mockEmail',
+      );
     });
   });
 
   describe('sendVerificationCode', () => {
     it('should send a verification code via email', async () => {
-      const result = await qrCodeController.sendVerificationCode({ email: 'mockEmail' } as EmailDto);
+      const result = await qrCodeController.sendVerificationCode({
+        email: 'mockEmail',
+      } as EmailDto);
       expect(result).toEqual({ success: true });
       expect(qrCodeService.sendEmail).toHaveBeenCalledWith('mockEmail');
     });
@@ -92,9 +121,17 @@ describe('QrCodeController', () => {
 
   describe('getUserSubscriptionsByCode', () => {
     it('should get user subscriptions by code', async () => {
-      const result = await qrCodeController.getUserSubscriptionsByCode({ code: 'mockCode' } as CodeDto);
-      expect(result).toEqual({ name: 'mockName', subscriptions: [], tip: 'mockTip' });
-      expect(qrCodeService.getUserSubscriptions).toHaveBeenCalledWith('mockcode');
+      const result = await qrCodeController.getUserSubscriptionsByCode({
+        code: 'mockCode',
+      } as CodeDto);
+      expect(result).toEqual({
+        name: 'mockName',
+        subscriptions: [],
+        tip: 'mockTip',
+      });
+      expect(qrCodeService.getUserSubscriptions).toHaveBeenCalledWith(
+        'mockcode',
+      );
     });
   });
 });
