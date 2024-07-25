@@ -16,6 +16,9 @@ export class ApiKeyAuthService {
         technology,
         userId: { name }
       } = user;
+
+      console.log(user);
+      
       const urlTips = process.env.TIPS_URL
 
       const tipResponse = await axios.get(`${urlTips}/tips/random?limit=1&level=${level}&technology=${technology}`, {
@@ -23,6 +26,9 @@ export class ApiKeyAuthService {
           "x-api-key": process.env.TVS_APIKEY
         }
       }, );
+
+      console.log('daticos',tipResponse.data);
+      
            
       const tip = tipResponse.data;
       
