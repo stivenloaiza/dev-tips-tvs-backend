@@ -6,7 +6,6 @@ import { QrCodeModule } from './modules/qr-code/qr-code.module';
 import db_config from './modules/persistence/db-config';
 import { HttpModule } from '@nestjs/axios';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({

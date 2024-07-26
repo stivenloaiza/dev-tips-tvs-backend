@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <img src="https://riwi.io/wp-content/uploads/2023/07/Fondo-claro-logo2-1.png" width="650" alt="Riwi Logo" />
 </p>
 
 # TV'S MICROSERVICE | DEV TIPS
@@ -146,13 +146,34 @@ http://localhost:{PORT}/api/doc
 - **Tips**: [GitHub repository](https://github.com/stivenloaiza/dev-tips-tips-backend)
 - **Cron Jobs**: [GitHub repository](https://github.com/stivenloaiza/dev-tips-cronjobs-backend)
 
+## Unit tests
+
+<h3>Setting up the test environment</h3>
+
+```bash
+npm install --save-dev jest @types/jest ys-jest
+```
+<h3>run the tests</h3>
+
+```bash
+npm run test
+```
+
 ## Colaboradores
+<h3>developers</h3>
 
 - Samuel Vera Miranda: [GitHub profile](https://github.com/SamuelSml8) | Backend
 - Manuela Giraldo Arango: [GitHub profile](https://github.com/Arangog20) | Backend
 - Daniel Stiven López Carmona: [GitHub profile](https://github.com/stiv-ca) | Frontend
 - Alexander Hernández Martínez: [GitHub profile](https://github.com/AlexanderHernandez17) | Frontend
 - Juan Camilo Atehortua: [GitHub profile](https://github.com/JuanCamilo97-stack) | Frontend
+---------------
+<h3>Unit testing</h3>
+
+- Deiby Cardona: [GitHub profile](https://github.com/deiby666) 
+- Daniel Jimenezes: [GitHub profile](https://github.com/daniejl04)
+- Angelica Hernandez: [GitHub profile](https://github.com/gelhg08)
+- Miguel Angel Rivera Florez: [GitHub profile](https://github.com/angel98981)
 
 ## License
 

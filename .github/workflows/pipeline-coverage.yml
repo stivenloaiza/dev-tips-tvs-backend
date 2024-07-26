@@ -1,4 +1,5 @@
-name: Pipeline Lint
+name: Pipeline Coverage
+
 on:
   push:
     branches:
@@ -10,23 +11,21 @@ on:
       - dev
 
 jobs:
-  lint:
+  coverage:
+    name: Coverage analysis
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Use Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '21.x'
+          node-version: '20.10.0'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run linter
-        run: npm run lint
-
-      - name: Run unit tests
-        run: npm test
+      - name: Run tests with coverage
+        run: npm run test:cov

@@ -46,14 +46,14 @@ export class QrCodeService {
     return qrCode ? qrCode.isAuthenticated : false;
   }
 
-  async userExists(email: string): Promise<Boolean> {
-    try {
-      const response = await axios.get(
-        `${process.env.USER_URL}/users/findByEmail/${email}`,
-      );
-      return response.status === 200;
-    } catch (error) {
-      console.error('Error fetching user:', error);
+  async userExists(email: string): Promise<boolean> {
+    const response = await axios.get(
+      `${process.env.USER_URL}/users/findByEmail/${email}`,
+    );
+    console.log(response);
+    if (response.status === 200) {
+      return true;
+    } else {
       return false;
     }
   }
@@ -145,57 +145,31 @@ export class QrCodeService {
         );
         const user = response.data;
         if (!user) {
-          return {
-            statusCode: 404,
-            message: 'User not found',
-          };
+          throw new NotFoundException('User not found');
         }
 
         const tvSubscriptions = user.subscriptions.filter(
           (sub) => sub.type === 'tv',
         );
-        if (tvSubscriptions.length === 0) {
-          return {
-            statusCode: 404,
-            message: 'No TV subscriptions found',
-          };
-        }
 
-        const subscription = tvSubscriptions[0];
+        const tipResponse = await axios.get(process.env.TIPS_URL);
 
-        const tipResponse = await axios.get(
-          `${process.env.TIPS_URL}?level=${subscription.level}&technology=${subscription.technology}`,
-        );
-
-        const tips = tipResponse.data;
-        if (!Array.isArray(tips) || tips.length === 0) {
-          return {
-            name: user.name,
-            subscriptions: tvSubscriptions,
-            tip: 'Tip not found',
-          };
-        }
-
-        const randomIndex = Math.floor(Math.random() * tips.length);
-        const randomTip = tips[randomIndex];
-
+        const tip = tipResponse.data;
+        const randomIndex = Math.floor(Math.random() * tip.length);
+        const randomTip = tip[randomIndex];
         return {
           name: user.name,
           subscriptions: tvSubscriptions,
-          tip: randomTip || 'Tip not found',
+          tip: randomTip,
         };
       } catch (error) {
-        console.error('Error fetching user data or tips:', error);
-        return {
-          statusCode: 500,
-          message: 'Error fetching user data or tips',
-        };
+        throw new HttpException(
+          error.response?.data || 'Error fetching user data',
+          error.response?.status || 500,
+        );
       }
     } else {
-      return {
-        statusCode: 404,
-        message: 'Invalid code',
-      };
+      throw new NotFoundException('Invalid code');
     }
   }
 }
