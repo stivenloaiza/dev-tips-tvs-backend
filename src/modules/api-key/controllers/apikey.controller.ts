@@ -1,6 +1,13 @@
-import { Controller, Get, HttpCode, HttpException, HttpStatus, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  HttpException,
+  HttpStatus,
+  Query,
+} from '@nestjs/common';
 import { ApiKeyAuthService } from '../services/apikey.service';
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthenticationApikeyDto } from '../dtos/dtos-apikey';
 
 @ApiTags('Api Key')

@@ -14,26 +14,22 @@ describe('QrCodeController', () => {
     verifyQrCode: jest.fn().mockResolvedValue(true),
     checkAuthentication: jest.fn().mockResolvedValue(true),
     userExists: jest.fn().mockResolvedValue(true),
-    generateVerificationCode: jest
-      .fn()
-      .mockResolvedValue({
-        code: 'mockCode',
-        email: 'mockEmail',
-        used: false,
-        createdAt: new Date(),
-        expiredAt: new Date(),
-      }),
+    generateVerificationCode: jest.fn().mockResolvedValue({
+      code: 'mockCode',
+      email: 'mockEmail',
+      used: false,
+      createdAt: new Date(),
+      expiredAt: new Date(),
+    }),
     sendEmail: jest.fn().mockResolvedValue({ success: true }),
     isCodeMatch: jest
       .fn()
       .mockResolvedValue({ isCodeMatch: true, email: 'mockEmail' }),
-    getUserSubscriptions: jest
-      .fn()
-      .mockResolvedValue({
-        name: 'mockName',
-        subscriptions: [],
-        tip: 'mockTip',
-      }),
+    getUserSubscriptions: jest.fn().mockResolvedValue({
+      name: 'mockName',
+      subscriptions: [],
+      tip: 'mockTip',
+    }),
   };
 
   beforeEach(async () => {

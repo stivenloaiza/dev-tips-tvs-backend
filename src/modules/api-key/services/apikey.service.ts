@@ -5,11 +5,13 @@ import axios from 'axios';
 export class ApiKeyAuthService {
   async startByApiKey(apikey: string): Promise<any> {
     try {
-      const urlUser = process.env.USER_URL
-      const response = await axios.get(`${urlUser}/v1/api/tvs/getApiKey/${apikey}`);
-      
+      const urlUser = process.env.USER_URL;
+      const response = await axios.get(
+        `${urlUser}/v1/api/tvs/getApiKey/${apikey}`,
+      );
+
       const user = response.data;
-      
+
       const {
         level,
         technology,
@@ -17,20 +19,22 @@ export class ApiKeyAuthService {
       } = user;
 
       console.log(user);
-      
-      const urlTips = process.env.TIPS_URL
 
-      const tipResponse = await axios.get(`${urlTips}/tips/random?limit=1&level=${level}&technology=${technology}`, {
-        headers:{
-          "x-api-key": process.env.TVS_APIKEY
-        }
-      }, );
+      const urlTips = process.env.TIPS_URL;
 
-      console.log('daticos',tipResponse.data);
-      
-           
+      const tipResponse = await axios.get(
+        `${urlTips}/tips/random?limit=1&level=${level}&technology=${technology}`,
+        {
+          headers: {
+            'x-api-key': process.env.TVS_APIKEY,
+          },
+        },
+      );
+
+      console.log('daticos', tipResponse.data);
+
       const tip = tipResponse.data;
-      
+
       return { tip, name };
     } catch (error) {
       if (error.response && error.response.status === 404) {

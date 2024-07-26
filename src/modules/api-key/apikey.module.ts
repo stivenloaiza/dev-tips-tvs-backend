@@ -4,9 +4,8 @@ import { HttpModule } from '@nestjs/axios';
 import { ApiKeyAuthService } from './services/apikey.service';
 import { AuthenticationApikeyDto } from './dtos/dtos-apikey';
 
-
 @Module({
-  imports: [ HttpModule],
+  imports: [HttpModule],
   controllers: [ApiKeyAuthController],
   providers: [ApiKeyAuthService, AuthenticationApikeyDto],
   exports: [ApiKeyAuthService],
